@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TrendTap – Prototype</title>
+  <meta name="theme-color" content="#f5f7f2">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="TrendTap home"><span class="brand-mark">T</span><span>trend<span class="brand-light">tap</span></span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="tabs" aria-label="Sections">
+        <button class="tab active" data-tab="dashboard" data-icon="◫">Dashboard</button>
+        <button class="tab" data-tab="alerts" data-icon="◉">WhatsApp alerts</button>
+        <button class="tab" data-tab="report" data-icon="▤">Client report</button>
+        <button class="tab" data-tab="value" data-icon="↗">Value calculator</button>
+        <button class="tab" data-tab="market" data-icon="◎">Market opportunity</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <span class="sidebar-status"><i></i> Prototype workspace</span>
+        <p>Early signals for ideas that move culture.</p>
+        <span class="badge">SAMPLE DATA</span>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="topbar-kicker">TREND INTELLIGENCE <span>/</span> SRI LANKA</div>
+        <div class="topbar-main">
+          <div>
+            <h1>Know what’s next.</h1>
+            <p>Spot the signal. Make your move before the moment passes.</p>
+          </div>
+          <div class="live-pill"><i></i> Demo data <span>·</span> refreshes every 15 min</div>
+        </div>
+      </header>
+
+      <main>
+    <!-- DASHBOARD -->
+    <section id="tab-dashboard" class="panel-tab active">
+      <div class="section-heading">
+        <div><span class="eyebrow">YOUR RADAR</span><h2>Today’s trend pulse</h2><p>Catch the rising wave while it’s still yours to ride.</p></div>
+        <div class="region-pill"><span>◉</span> Sri Lanka <b>⌄</b></div>
+      </div>
+      <div class="stats">
+        <div class="stat stat-total"><span class="stat-label">TRENDS TRACKED</span><span class="num c-teal" id="statTotal">0</span><span class="stat-foot"><i class="stat-dot"></i> Across all categories</span></div>
+        <div class="stat stat-rising"><span class="stat-label">STILL RISING</span><span class="num c-amber" id="statRising">0</span><span class="stat-foot"><i class="stat-dot"></i> Ready for your next idea</span></div>
+        <div class="stat stat-alerts"><span class="stat-label">ON YOUR RADAR</span><span class="num c-coral" id="statAlerts">0</span><span class="stat-foot"><i class="stat-dot"></i> Above your alert threshold</span></div>
+        <div class="stat stat-updated"><span class="stat-label">LAST REFRESH</span><span class="num small" id="statUpdated">–</span><span class="stat-foot"><i class="stat-dot"></i> Updated automatically</span></div>
+      </div>
+
+      <div class="controls">
+        <div class="controls-title"><span class="filter-icon">≡</span><span>Refine your radar</span></div>
+        <label>Rank trends by
+          <select id="sortBy">
+            <option value="velocity">Velocity (how fast it is growing)</option>
+            <option value="volume">Volume (how big it already is)</option>
+          </select>
+        </label>
+        <label>Category <select id="filterCategory"></select></label>
+        <label>Language <select id="filterLanguage"></select></label>
+        <label>Status
+          <select id="filterStatus">
+            <option>All</option><option>Rising</option><option>Peaking</option><option>Peaked</option>
+          </select>
+        </label>
+        <label class="grow"><span>My alert threshold: growth of at least <b id="thresholdLabel">150</b>% in 48 hours</span>
+          <input type="range" id="threshold" min="50" max="400" step="10" value="150">
+        </label>
+      </div>
+      <p class="hint" id="sortHint"></p>
+      <div id="feed" class="feed"></div>
+    </section>
+
+    <!-- ALERTS -->
+    <section id="tab-alerts" class="panel-tab">
+      <h2>WhatsApp alerts</h2>
+      <p class="hint">Alerts go to WhatsApp, where agency teams already work. Only trends above your threshold (set on the Dashboard) are sent.</p>
+      <div class="phone">
+        <div class="phone-head">TrendTap · alerts</div>
+        <div class="chat" id="chat"></div>
+      </div>
+    </section>
+
+    <!-- REPORT -->
+    <section id="tab-report" class="panel-tab">
+      <h2>White-label client report</h2>
+      <div class="controls">
+        <label>Agency name <input type="text" id="agencyName" value="Your Agency"></label>
+        <label>Client name <input type="text" id="clientName" value="Client Name"></label>
+        <button class="btn" id="printBtn">Print / save as PDF</button>
+      </div>
+      <article class="report" id="reportPreview"></article>
+    </section>
+
+    <!-- VALUE -->
+    <section id="tab-value" class="panel-tab">
+      <h2>Does it pay for itself?</h2>
+      <div class="controls">
+        <label>Hours a week one manager spends scrolling for trends <input type="number" id="hours" min="0" max="40" step="0.5" value="6.5"></label>
+        <label>Loaded staff cost per hour (LKR) <input type="number" id="rate" min="0" step="100" value="1500"></label>
+        <label>TrendTap plan
+          <select id="plan">
+            <option value="4500">Basic · LKR 4,500</option>
+            <option value="10000" selected>Pro · LKR 10,000</option>
+            <option value="22000">Agency · LKR 22,000</option>
+          </select>
+        </label>
+      </div>
+      <div class="stats" id="valueOut"></div>
+      <p class="hint">Staff cost per month = hours a week × cost per hour × 4 weeks. Defaults come from our primary research (6–8 hours a week; LKR 1,500 per hour).</p>
+    </section>
+
+    <!-- MARKET -->
+    <section id="tab-market" class="panel-tab">
+      <h2>Market opportunity</h2>
+      <div class="stats">
+        <div class="stat"><span class="num c-teal">1,250</span><span>organisations in the addressable market</span></div>
+        <div class="stat"><span class="num c-amber">LKR 120M</span><span>served market a year (about LKR 8,000 per account per month)</span></div>
+        <div class="stat"><span class="num c-coral">88</span><span>paying accounts in Year 1, about 7% of the market</span></div>
+      </div>
+      <div class="two">
+        <div class="box">
+          <h3>Who buys</h3>
+          <table>
+            <tr><th>Segment</th><th>Size</th><th>Plan</th></tr>
+            <tr><td>Digital and creative agencies</td><td>~250</td><td>Agency / Pro</td></tr>
+            <tr><td>In-house social and brand teams</td><td>~400</td><td>Pro / Agency</td></tr>
+            <tr><td>Creators and influencer managers</td><td>~600</td><td>Basic</td></tr>
+          </table>
+        </div>
+        <div class="box">
+          <h3>Customer need we measured</h3>
+          <ul>
+            <li>18 interviews and 64 completed surveys</li>
+            <li>6–8 hours a week lost to manual scrolling, about LKR 39,000 a month per manager</li>
+            <li>Most managers recognise a trend only after it has saturated</li>
+            <li>8-week pilot with 10 agencies; 4 agreed to pay at launch</li>
+          </ul>
+        </div>
+      </div>
+      <div class="box">
+        <h3>Competitive landscape</h3>
+        <table>
+          <tr><th>Option</th><th>Tells you a trend is still rising?</th><th>Understands Sri Lanka?</th><th>Weakness</th></tr>
+          <tr><td>Manual scanning</td><td>No</td><td>Yes</td><td>Slow, unrepeatable, 6–8 unbillable hours a week</td></tr>
+          <tr><td>Google Trends</td><td>No</td><td>Partly</td><td>Measures search, reports weekly, no alerts</td></tr>
+          <tr><td>TrendTok and similar</td><td>Partly</td><td>No</td><td>Built on US sound libraries</td></tr>
+          <tr><td>Meltwater / Brandwatch</td><td>Partly</td><td>No</td><td>USD 500–1,500 a month; no Sinhala or Tamil</td></tr>
+          <tr class="us"><td>TrendTap</td><td>Yes</td><td>Yes</td><td>Velocity scoring, Sinhala and Tamil, lawful data sources</td></tr>
+        </table>
+        <p class="hint">Ratings are our qualitative assessment from the business plan (Annexure I).</p>
+      </div>
+    </section>
+      </main>
+
+      <footer>TrendTap (Pvt) Ltd <span>·</span> Innovation Management and Entrepreneurship (IT4050) <span>·</span> All trend data shown is sample data for demonstration.</footer>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
